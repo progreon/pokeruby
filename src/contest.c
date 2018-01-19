@@ -4034,6 +4034,7 @@ u8 sub_80B09E4(u8 a)
     u8 r8;
     u8 r6;
     volatile u8 zero;
+    int temp;
 
     LoadCompressedObjectPic(&gUnknown_083CC4B4[a]);
     LoadSpritePalette(&gUnknown_083CC4D4[a]);
@@ -4041,16 +4042,21 @@ u8 sub_80B09E4(u8 a)
     r6 = CreateSprite(&gSpriteTemplate_83CC53C[a], 248, r5, 29);
     gSprites[r6].oam.tileNum += 64;
 
-    CopySpriteTiles(0, 3, (void *)VRAM, (u16 *)(VRAM + 0xE000 + gUnknown_02038696[a] * 5 * 64 + 0x26), (u8 *)(VRAM + 0x10000 + gSprites[r8].oam.tileNum * 32));
-    CopySpriteTiles(0, 3, (void *)VRAM, (u16 *)(VRAM + 0xE000 + gUnknown_02038696[a] * 5 * 64 + 0x36), (u8 *)(VRAM + 0x10000 + gSprites[r6].oam.tileNum * 32));
+    // CopySpriteTiles(0, 3, (void *)VRAM, (u16 *)(VRAM + 0xE000 + gUnknown_02038696[a] * 5 * 64 + 0x26), (u8 *)(VRAM + 0x10000 + gSprites[r8].oam.tileNum * 32));
+    // CopySpriteTiles(0, 3, (void *)VRAM, (u16 *)(VRAM + 0xE000 + gUnknown_02038696[a] * 5 * 64 + 0x36), (u8 *)(VRAM + 0x10000 + gSprites[r6].oam.tileNum * 32));
+    CopySpriteTiles(0, 3, (void *)VRAM, (u16 *)(VRAM + 0xE000 + gUnknown_02038696[a] * 5 * 64 + 0x26), OBJ_VRAM0_TEMP[gSprites[r8].oam.tileNum]);
+    CopySpriteTiles(0, 3, (void *)VRAM, (u16 *)(VRAM + 0xE000 + gUnknown_02038696[a] * 5 * 64 + 0x36), OBJ_VRAM0_TEMP[gSprites[r6].oam.tileNum]);
 
-    DmaFill32Defvars(3, 0, (void *)(VRAM + 0x10000 + (0x28 + gSprites[r8].oam.tileNum) * 32), 0x300);
+    // DmaFill32Defvars(3, 0, (void *)(VRAM + 0x10000 + (0x28 + gSprites[r8].oam.tileNum) * 32), 0x300);
+    temp = 40;
+    DmaFill32Defvars(3, 0, &OBJ_VRAM0_TEMP[gSprites[r8].oam.tileNum + temp], 0x300);
 
     // What is this?
     zero = 0;
     zero = 0;
 
-    DmaFill32Defvars(3, 0, (void *)(VRAM + 0x10000 + (0x28 + gSprites[r6].oam.tileNum) * 32), 0x300);
+    // DmaFill32Defvars(3, 0, (void *)(VRAM + 0x10000 + (0x28 + gSprites[r6].oam.tileNum) * 32), 0x300);
+    DmaFill32Defvars(3, 0, OBJ_VRAM0_TEMP[gSprites[r6].oam.tileNum + temp], 0x300);
 
     gSprites[r8].data[0] = r6;
     gSprites[r6].data[0] = r8;
@@ -4609,8 +4615,10 @@ void sub_80B1928(void)
             src = gContestApplauseMeterGfx + 64;
         else
             src = gContestApplauseMeterGfx;
-        CpuCopy32(src,      (void *)(VRAM + 0x10000 + (gSprites[sContest.applauseMeterSpriteId].oam.tileNum + 17 + i) * 32), 32);
-        CpuCopy32(src + 32, (void *)(VRAM + 0x10000 + (gSprites[sContest.applauseMeterSpriteId].oam.tileNum + 25 + i) * 32), 32);
+        // CpuCopy32(src,      (void *)(VRAM + 0x10000 + (gSprites[sContest.applauseMeterSpriteId].oam.tileNum + 17 + i) * 32), 32);
+        // CpuCopy32(src + 32, (void *)(VRAM + 0x10000 + (gSprites[sContest.applauseMeterSpriteId].oam.tileNum + 25 + i) * 32), 32);
+        CpuCopy32(src,      &OBJ_VRAM0_TEMP[gSprites[sContest.applauseMeterSpriteId].oam.tileNum + 17 + i], 32);
+        CpuCopy32(src + 32, &OBJ_VRAM0_TEMP[gSprites[sContest.applauseMeterSpriteId].oam.tileNum + 25 + i], 32);
         if (sContest.applauseLevel > 4)
             sub_80B1A2C();
     }
@@ -4881,7 +4889,8 @@ void sub_80B1FD0(bool8 a)
         {
             CpuCopy32(
               GetTurnOrderNumberGfx(i),
-              (void *)(VRAM + 0x10000 + (gSprites[shared19338[i].unk1].oam.tileNum + 5) * 32),
+              // (void *)(VRAM + 0x10000 + (gSprites[shared19338[i].unk1].oam.tileNum + 5) * 32),
+              OBJ_VRAM0_TEMP[gSprites[shared19338[i].unk1].oam.tileNum + 5],
               64);
             gSprites[shared19338[i].unk1].pos1.y = gUnknown_083CA33C[gUnknown_02038696[i]];
             gSprites[shared19338[i].unk1].invisible = FALSE;

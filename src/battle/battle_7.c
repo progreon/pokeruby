@@ -702,7 +702,8 @@ void sub_8031FC4(u8 a, u8 b, bool8 c)
                   gTransformedPersonalities[a]);
             }
         }
-        DmaCopy32Defvars(3, gUnknown_081FAF4C[r10], (void *)(VRAM + 0x10000 + gSprites[gObjectBankIDs[a]].oam.tileNum * 32), 0x800);
+        // DmaCopy32Defvars(3, gUnknown_081FAF4C[r10], (void *)(VRAM + 0x10000 + gSprites[gObjectBankIDs[a]].oam.tileNum * 32), 0x800);
+        DmaCopy32Defvars(3, gUnknown_081FAF4C[r10], &OBJ_VRAM0_TEMP[gSprites[gObjectBankIDs[a]].oam.tileNum], 0x800);
         paletteOffset = 0x100 + a * 16;
         lzPaletteData = GetMonSpritePalFromOtIdPersonality(species, otId, personalityValue);
         LZDecompressWram(lzPaletteData, gSharedMem);

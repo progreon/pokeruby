@@ -372,7 +372,8 @@ void sub_8148CB0(u8 a)
         LZ77UnCompVram(&gUnknown_08412EB4, (void *)(VRAM + 0x3000));
         LoadPalette(&gUnknown_08412818, 0, 96);
         LoadCompressedObjectPic(gUnknown_08416B54);
-        LZ77UnCompVram(&gUnknown_084131C4, (void *)(VRAM + 0x10000));
+        // LZ77UnCompVram(&gUnknown_084131C4, (void *)(VRAM + 0x10000));
+        LZ77UnCompVram(&gUnknown_084131C4, OBJ_VRAM0_TEMP);
         LoadPalette(&gUnknown_08413184, 256, 32);
         sub_8149248();
         break;
@@ -382,7 +383,8 @@ void sub_8148CB0(u8 a)
         LZ77UnCompVram(&gUnknown_08412EB4, (void *)(VRAM + 0x3000));
         LoadPalette(&gUnknown_08412878, 0, 96);
         LoadCompressedObjectPic(gUnknown_08416B54);
-        LZ77UnCompVram(&gUnknown_084131C4, (void *)(VRAM + 0x10000));
+        // LZ77UnCompVram(&gUnknown_084131C4, (void *)(VRAM + 0x10000));
+        LZ77UnCompVram(&gUnknown_084131C4, OBJ_VRAM0_TEMP);
         LoadPalette(&gUnknown_084131A4, 256, 32);
         sub_8149248();
         break;
